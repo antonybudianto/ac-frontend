@@ -27,7 +27,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <NavLink to="/" exact className="navbar-brand" href="#nav">
-        HelloApp
+        AnimalCrossingHub
       </NavLink>
       <button
         onClick={handleToggleNav}

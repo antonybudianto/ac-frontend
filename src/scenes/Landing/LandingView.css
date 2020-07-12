@@ -1,9 +1,15 @@
-body {
-  min-height: 75rem; /* Can be removed; just added for demo purposes */
-}
-
 .navbar {
   margin-bottom: 0;
+}
+
+.landingcontainer {
+  width: 100%;
+  max-width: 1024px;
+  margin: auto;
+  background-image: url(/acback.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .jumbotron {
@@ -19,6 +25,9 @@ body {
 
 .jumbotron-heading {
   font-weight: 300;
+
+  background: white;
+  border-radius: 20px;
 }
 
 .jumbotron .container {
@@ -31,5 +40,5 @@ footer {
 }
 
 footer p {
-  margin-bottom: .25rem;
+  margin-bottom: 0.25rem;
 }
