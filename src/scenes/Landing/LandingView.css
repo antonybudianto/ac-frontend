@@ -25,7 +25,8 @@
 
 .jumbotron-heading {
   font-weight: 300;
-
+  display: inline-block;
+  padding: 5px 15px;
   background: white;
   border-radius: 20px;
 }
@@ -41,4 +42,9 @@ footer {
 
 footer p {
   margin-bottom: 0.25rem;
+}
+
+.custom-card,
+.bg-black-op {
+  background: rgba(0, 0, 0, 0.6);
 }

@@ -12,6 +12,7 @@ import Navbar from './components/Navbar/Navbar';
 import './App.css';
 
 import { useUser } from './context/auth';
+import IslandView from './scenes/Island/IslandView';
 
 const HomeView = LoadableComponent({
   loader: () => import('./scenes/Home/HomeView'),
@@ -33,10 +34,10 @@ const App = () => {
       authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
       databaseURL: process.env.REACT_APP_FIREBASE_DB_URL,
       projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+      storageBucket: 'ac-frontend.appspot.com',
     };
     firebase.initializeApp(config);
     firebase.auth().onAuthStateChanged((user) => {
-      console.log(user);
       setUser(user);
       setLoading(false);
     });
@@ -60,6 +61,7 @@ const App = () => {
             path="/dashboard"
             component={HomeView}
           />
+          <Route isAuth={isAuth} path="/island/:name" component={IslandView} />
           <AuthRedirectRoute
             isAuth={isAuth}
             path="/login"

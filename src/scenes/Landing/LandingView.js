@@ -9,12 +9,22 @@ const LandingView = () => (
         <section
           className="jumbotron text-center"
           style={{
-            background: 'rgba(255,255,255,0.5)',
+            background: 'none',
           }}
         >
           <div className="container">
-            <h1 className="jumbotron-heading">Animal Crossing Hub</h1>
-            <p className="lead text-muted">
+            <h1 className="jumbotron-heading bg-black-op text-white">
+              Animal Crossing Hub
+            </h1>
+            <p
+              className="lead text-white bg-black-op"
+              style={{
+                display: 'inline-block',
+                paddingLeft: '15px',
+                paddingRight: '15px',
+                borderRadius: '20px',
+              }}
+            >
               Your one stop Animal Crossing hub!
             </p>
             <p>
@@ -27,7 +37,7 @@ const LandingView = () => (
         <div className="container">
           <div className="row">
             <div className="col-md-4">
-              <div className="card text-white bg-dark mb-3">
+              <div className="card text-white custom-card mb-3">
                 <div className="card-body">
                   <h4 className="card-title">Share</h4>
                   <p className="card-text">Share your DIY, items, etc.</p>
@@ -35,7 +45,7 @@ const LandingView = () => (
               </div>
             </div>
             <div className="col-md-4">
-              <div className="card text-white bg-dark mb-3">
+              <div className="card text-white custom-card mb-3">
                 <div className="card-body">
                   <h4 className="card-title">Events</h4>
                   <p className="card-text">
@@ -45,7 +55,7 @@ const LandingView = () => (
               </div>
             </div>
             <div className="col-md-4">
-              <div className="card text-white bg-dark mb-3">
+              <div className="card text-white custom-card mb-3">
                 <div className="card-body">
                   <h4 className="card-title">Free</h4>
                   <p className="card-text">Register for free, and forever!</p>
