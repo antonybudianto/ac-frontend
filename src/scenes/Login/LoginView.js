@@ -1,34 +1,34 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-class LoginView extends Component {
-  constructor(props) {
-    super(props);
-    this.signInGoogle = this.signInGoogle.bind(this);
-  }
+const LoginView = () => {
+  const [loading, setLoading] = useState(false);
 
-  signInGoogle() {
-    let provider = new firebase.auth.GoogleAuthProvider();
+  const signInGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    setLoading(true);
     firebase
       .auth()
       .signInWithRedirect(provider)
-      .then((res) => console.log(res));
-  }
+      .then((res) => console.log(res))
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
-  render() {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12 mt-3">
-            <button className="btn btn-default" onClick={this.signInGoogle}>
-              <i className="fa fa-google" /> Sign in using Google
-            </button>
-          </div>
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-md-12 mt-3">
+          <button className="btn btn-default" onClick={signInGoogle}>
+            <i className="fa fa-google" />{' '}
+            {loading ? 'Loading...' : 'Sign in using Google'}
+          </button>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default LoginView;

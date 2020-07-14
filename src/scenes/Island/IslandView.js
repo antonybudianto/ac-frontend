@@ -1,27 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-function IslandView(props) {
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/storage';
+
+function IslandView({ match }) {
+  const [island, setIsland] = useState(null);
+  const [cover, setCover] = useState('');
+
+  useEffect(() => {
+    const storageRef = firebase.storage().ref();
+
+    const db = firebase.firestore();
+    db.collection('islands')
+      .doc(match.params.name)
+      .get()
+      .then((res) => {
+        const data = res.data();
+        setIsland({ ...data, id: res.id, diy: data.diy || [] });
+        const userCoverRef = storageRef.child(`islands/${res.id}/cover.jpg`);
+        userCoverRef.getDownloadURL().then((url) => {
+          setCover(url);
+        });
+      });
+  }, [match.params.name]);
+
   return (
     <div className="container">
-      <div
-        className="jumbotron text-center"
-        style={{
-          height: '200px',
-          backgroundSize: 'cover',
-          backgroundImage:
-            'url(https://firebasestorage.googleapis.com/v0/b/ac-frontend.appspot.com/o/user%2FIHGxvrUvuNSVrdxj2iDq9mIacou2%2Fcover.jpg?alt=media&token=a5fb7809-b12d-4fa1-b155-7ec53c9707cf)',
-        }}
-      >
-        Raftel
-      </div>
-      <div className="py-5 px-5 bg-light">
-        <h1>Raftel</h1>
-        <div>Peach fruit</div>
-      </div>
-      <div className="py-5 px-5 bg-light">
-        <h2>Free Items/DIY</h2>
-        <div></div>
-      </div>
+      {island ? (
+        <>
+          <div
+            className="jumbotron text-center"
+            style={{
+              height: '350px',
+              backgroundSize: 'cover',
+              backgroundImage: `url(${cover})`,
+            }}
+          ></div>
+          <div className="py-5 px-5 bg-light">
+            <h1>{island.name}</h1>
+            <div>{island.fruit} fruit</div>
+          </div>
+          <div className="py-5 px-5 bg-light">
+            <h3>Free Items/DIY</h3>
+            <div>
+              {island.diy.map((d, i) => (
+                <div key={i}>{d}</div>
+              ))}
+            </div>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

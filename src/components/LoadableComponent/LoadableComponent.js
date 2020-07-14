@@ -1,7 +1,7 @@
 import React from 'react';
 import Loadable from 'react-loadable';
 
-const LoadableComponent = opts =>
+const LoadableComponent = (opts) =>
   Loadable({
     loading: () => (
       <div className="container">

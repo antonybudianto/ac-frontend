@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter, Route } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -14,6 +14,16 @@ import './App.css';
 import { useUser } from './context/auth';
 import IslandView from './scenes/Island/IslandView';
 
+const config = {
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DB_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: 'ac-frontend.appspot.com',
+};
+
+firebase.initializeApp(config);
+
 const HomeView = LoadableComponent({
   loader: () => import('./scenes/Home/HomeView'),
 });
@@ -25,18 +35,10 @@ const LandingView = LoadableComponent({
 });
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
   const { user, setUser } = useUser();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const config = {
-      apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-      authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-      databaseURL: process.env.REACT_APP_FIREBASE_DB_URL,
-      projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-      storageBucket: 'ac-frontend.appspot.com',
-    };
-    firebase.initializeApp(config);
     firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
       setLoading(false);
@@ -48,28 +50,21 @@ const App = () => {
   return (
     <div className="App" id="app">
       <Navbar />
-      {loading ? (
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12 mt-3">Checking authentication...</div>
-          </div>
-        </div>
-      ) : (
-        <Switch>
-          <PrivateRoute
-            isAuth={isAuth}
-            path="/dashboard"
-            component={HomeView}
-          />
-          <Route isAuth={isAuth} path="/island/:name" component={IslandView} />
-          <AuthRedirectRoute
-            isAuth={isAuth}
-            path="/login"
-            component={LoginView}
-          />
-          <Route path="/" exact component={LandingView} />
-        </Switch>
-      )}
+      <Switch>
+        <PrivateRoute
+          loading={loading}
+          isAuth={user}
+          path="/dashboard"
+          component={HomeView}
+        />
+        <Route isAuth={isAuth} path="/island/:name" component={IslandView} />
+        <AuthRedirectRoute
+          isAuth={isAuth}
+          path="/login"
+          component={LoginView}
+        />
+        <Route path="/" exact component={LandingView} />
+      </Switch>
     </div>
   );
 };
