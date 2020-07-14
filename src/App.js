@@ -13,6 +13,7 @@ import './App.css';
 
 import { useUser } from './context/auth';
 import IslandView from './scenes/Island/IslandView';
+import IslandExploreView from './scenes/IslandExplore/IslandExploreView';
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -57,7 +58,8 @@ const App = () => {
           path="/dashboard"
           component={HomeView}
         />
-        <Route isAuth={isAuth} path="/island/:name" component={IslandView} />
+        <Route path="/islands" component={IslandExploreView} />
+        <Route path="/island/:name" component={IslandView} />
         <AuthRedirectRoute
           isAuth={isAuth}
           path="/login"

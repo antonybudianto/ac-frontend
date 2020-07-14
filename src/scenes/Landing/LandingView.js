@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './LandingView.css';
 
@@ -28,9 +29,9 @@ const LandingView = () => (
               Your one stop Animal Crossing hub!
             </p>
             <p>
-              <a href="#getStarted" className="btn btn-primary">
-                Coming soon!
-              </a>
+              <Link to="/islands" className="btn btn-primary">
+                Explore!
+              </Link>
             </p>
           </div>
         </section>

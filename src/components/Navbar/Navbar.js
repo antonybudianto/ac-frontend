@@ -47,17 +47,10 @@ const Navbar = () => {
         id="navbarSupportedContent"
       >
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item active">
-            {isAuth && (
-              <NavLink
-                to="/dashboard"
-                exact
-                className="nav-link"
-                href="#dashboard"
-              >
-                Dashboard <span className="sr-only">(current)</span>
-              </NavLink>
-            )}
+          <li className="nav-item">
+            <NavLink to="/islands" exact className="nav-link">
+              Islands
+            </NavLink>
           </li>
         </ul>
         <ul className="navbar-nav">
@@ -80,6 +73,14 @@ const Navbar = () => {
                 }
                 aria-labelledby="navbarDropdownMenuLink"
               >
+                <NavLink
+                  onClick={handleToggleUserDropdown}
+                  to="/dashboard"
+                  exact
+                  className="dropdown-item"
+                >
+                  Dashboard
+                </NavLink>
                 <a onClick={signOut} className="dropdown-item" href="#signout">
                   Sign out
                 </a>

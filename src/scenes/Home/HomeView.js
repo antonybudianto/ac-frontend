@@ -13,11 +13,12 @@ const HomeView = (p) => {
   const [loading, setLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
+  const [island, setIsland] = useState({});
   const [islandName, setIslandName] = useState('');
   const [islandFruit, setIslandFruit] = useState('');
   const { user } = useUser();
   const [userDb, setUserDb] = useState({});
-  const [cover, setCover] = useState('');
+  // const [cover, setCover] = useState('');
   const { uid } = user;
 
   useEffect(() => {
@@ -32,13 +33,13 @@ const HomeView = (p) => {
         setUserDb(data);
         setLoading(false);
 
-        const storageRef = firebase.storage().ref();
-        const userCoverRef = storageRef.child(
-          `islands/${data.islandId}/cover.jpg`
-        );
-        userCoverRef.getDownloadURL().then((url) => {
-          setCover(url);
-        });
+        db.collection('islands')
+          .doc(data.islandId)
+          .get()
+          .then((res) => {
+            const islandData = res.data();
+            setIsland(islandData);
+          });
       });
   }, [uid, uploadLoading]);
 
@@ -72,7 +73,16 @@ const HomeView = (p) => {
     userCoverRef
       .put(e.target.files[0])
       .then((res) => {
-        alert('Upload success!');
+        userCoverRef.getDownloadURL().then((url) => {
+          db.collection('islands')
+            .doc(userDb.islandId)
+            .update({
+              cover: url,
+            })
+            .catch(() => {
+              alert('Error upload. Please try again later.');
+            });
+        });
       })
       .catch((err) => {
         console.error(err);
@@ -94,16 +104,18 @@ const HomeView = (p) => {
               {userDb.islandId ? (
                 <div className="mt-3">
                   <h3>Upload cover</h3>
-                  <input
-                    disabled={loading}
-                    type="file"
-                    onChange={handleChange}
-                  />
+                  {!uploadLoading && (
+                    <input
+                      disabled={loading}
+                      type="file"
+                      onChange={handleChange}
+                    />
+                  )}
                   {uploadLoading ? 'Uploading...' : ''}
                   <div>
-                    {cover && (
+                    {island.cover && (
                       <img
-                        src={cover}
+                        src={island.cover}
                         alt="img"
                         style={{
                           width: '400px',
