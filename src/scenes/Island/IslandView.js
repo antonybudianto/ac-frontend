@@ -18,7 +18,7 @@ function IslandView({ match }) {
   }, [match.params.name]);
 
   return (
-    <div className="container">
+    <div className="container container-mobile">
       {island ? (
         <>
           <div

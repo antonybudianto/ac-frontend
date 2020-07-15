@@ -47,7 +47,7 @@
 }
 
 @media screen and (max-width: 700px) {
-  .container {
+  .container-mobile {
     padding: 0px;
   }
 
