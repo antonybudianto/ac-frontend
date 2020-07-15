@@ -1,96 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/storage';
 import 'firebase/firestore';
 
 import { useUser } from '../../context/auth';
+import CoverView from './CoverView';
+import GalleryView from './GalleryView';
 
 const db = firebase.firestore();
 
 const HomeView = (p) => {
-  const [loading, setLoading] = useState(false);
-  const [submitLoading, setSubmitLoading] = useState(false);
-  const [uploadLoading, setUploadLoading] = useState(false);
+  const [tab, setTab] = useState('cover');
+  const [loading, setLoading] = useState(true);
   const [island, setIsland] = useState({});
   const [islandName, setIslandName] = useState('');
   const [islandFruit, setIslandFruit] = useState('');
   const { user } = useUser();
   const [userDb, setUserDb] = useState({});
-  // const [cover, setCover] = useState('');
   const { uid } = user;
 
   useEffect(() => {
-    if (!uploadLoading) {
-      setLoading(true);
-    }
     db.collection('users')
       .doc(uid)
       .get()
       .then((res) => {
         const data = res.data();
         setUserDb(data);
-        setLoading(false);
 
-        db.collection('islands')
+        return db
+          .collection('islands')
           .doc(data.islandId)
           .get()
           .then((res) => {
             const islandData = res.data();
             setIsland(islandData);
           });
-      });
-  }, [uid, uploadLoading]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    db.collection('islands')
-      .doc(islandName)
-      .set({
-        fruit: islandFruit,
-        name: islandName,
-        owner: uid,
-      })
-      .then((ref) => {
-        db.collection('users').doc(uid).update({
-          islandId: islandName,
-        });
-
-        alert('Island created successfully!');
-        window.location.reload();
-      });
-
-    setSubmitLoading(true);
-  };
-
-  const handleChange = (e) => {
-    setUploadLoading(true);
-    const storageRef = firebase.storage().ref();
-    const userCoverRef = storageRef.child(
-      `islands/${userDb.islandId}/cover.jpg`
-    );
-    userCoverRef
-      .put(e.target.files[0])
-      .then((res) => {
-        userCoverRef.getDownloadURL().then((url) => {
-          db.collection('islands')
-            .doc(userDb.islandId)
-            .update({
-              cover: url,
-            })
-            .catch(() => {
-              alert('Error upload. Please try again later.');
-            });
-        });
-      })
-      .catch((err) => {
-        console.error(err);
       })
       .finally(() => {
-        setUploadLoading(false);
+        setLoading(false);
       });
-  };
+  }, [uid]);
 
   return (
     <div className="container">
@@ -101,65 +52,45 @@ const HomeView = (p) => {
             <div>loading...</div>
           ) : (
             <>
-              {userDb.islandId ? (
-                <div className="mt-3">
-                  <h3>Upload cover</h3>
-                  {!uploadLoading && (
-                    <input
-                      disabled={loading}
-                      type="file"
-                      onChange={handleChange}
-                    />
-                  )}
-                  {uploadLoading ? 'Uploading...' : ''}
-                  <div>
-                    {island.cover && (
-                      <img
-                        src={island.cover}
-                        alt="img"
-                        style={{
-                          width: '400px',
-                          height: '200px',
-                        }}
-                      />
-                    )}
-                  </div>
-                  <div className="mt-5">
-                    <Link to={`/island/${userDb.islandId}`}>
-                      Visit island page
-                    </Link>
-                  </div>
-                </div>
-              ) : (
-                <div className="mt-3">
-                  <h3>Create island</h3>
-                  <form noValidate onSubmit={handleSubmit}>
-                    <div className="form-group">
-                      <input
-                        className="form-control"
-                        type="text"
-                        value={islandName}
-                        onChange={(e) => setIslandName(e.target.value)}
-                        placeholder="Your island name"
-                      />
-                      <input
-                        className="form-control"
-                        type="text"
-                        value={islandFruit}
-                        onChange={(e) => setIslandFruit(e.target.value)}
-                        placeholder="Your native fruit"
-                      />
-                      <button
-                        disabled={submitLoading}
-                        type="submit"
-                        className="mt-2 btn btn-primary"
-                      >
-                        {submitLoading ? 'Creating...' : 'Create'}
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              )}
+              <div className="float-right">
+                <Link to={`/island/${userDb.islandId}`}>Visit island page</Link>
+              </div>
+              <ul className="nav nav-tabs">
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    to="/dashboard"
+                    exact
+                    onClick={() => setTab('cover')}
+                  >
+                    Upload cover
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    to="/dashboard/gallery"
+                    onClick={() => setTab('gallery')}
+                  >
+                    Gallery
+                  </NavLink>
+                </li>
+              </ul>
+              <div className="mt-3">
+                {tab === 'cover' && (
+                  <CoverView
+                    uid={uid}
+                    userDb={userDb}
+                    loading={loading}
+                    island={island}
+                    islandName={islandName}
+                    islandFruit={islandFruit}
+                    setIslandName={setIslandName}
+                    setIslandFruit={setIslandFruit}
+                  />
+                )}
+                {tab === 'gallery' && <GalleryView />}
+              </div>
             </>
           )}
         </div>
