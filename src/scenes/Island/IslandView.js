@@ -24,7 +24,7 @@ function IslandView({ match }) {
           <div
             className="jumbotron text-center"
             style={{
-              height: '350px',
+              height: '280px',
               backgroundSize: 'cover',
               backgroundImage: `url(${island.cover})`,
             }}
@@ -32,6 +32,26 @@ function IslandView({ match }) {
           <div className="py-5 px-5 bg-light">
             <h1>{island.name}</h1>
             <div>{island.fruit} fruit</div>
+          </div>
+          <div className="py-5 px-5 bg-light">
+            <h3>Gallery</h3>
+            <div className="gallery-container">
+              {(island.gallery || []).map((g, i) => {
+                if (!g) {
+                  return <div key={i} className="gallery-img img-empty"></div>;
+                }
+                return (
+                  <div
+                    key={i}
+                    className="gallery-img"
+                    style={{
+                      backgroundImage: `url(${g})`,
+                      backgroundSize: 'cover',
+                    }}
+                  ></div>
+                );
+              })}
+            </div>
           </div>
           <div className="py-5 px-5 bg-light">
             <h3>Free Items/DIY</h3>

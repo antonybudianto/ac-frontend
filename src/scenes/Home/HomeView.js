@@ -11,8 +11,9 @@ import GalleryView from './GalleryView';
 
 const db = firebase.firestore();
 
-const HomeView = (p) => {
-  const [tab, setTab] = useState('cover');
+const HomeView = ({ match }) => {
+  const [update, setUpdate] = useState(0);
+  const [tab, setTab] = useState(match.params.menu || 'home');
   const [loading, setLoading] = useState(true);
   const [island, setIsland] = useState({});
   const [islandName, setIslandName] = useState('');
@@ -35,33 +36,39 @@ const HomeView = (p) => {
           .get()
           .then((res) => {
             const islandData = res.data();
-            setIsland(islandData);
+            setIsland({ id: res.id, ...islandData });
           });
       })
       .finally(() => {
         setLoading(false);
       });
-  }, [uid]);
+  }, [uid, update]);
+
+  const handleSuccessGallery = () => {
+    setUpdate(update + 1);
+  };
 
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-12 mt-3">
+        <div className="col-md-12 mt-3 mb-5">
           <h1>Welcome, {user.displayName}</h1>
           {loading ? (
-            <div>loading...</div>
+            <div>Loading...</div>
           ) : (
             <>
               <div className="float-right">
-                <Link to={`/island/${userDb.islandId}`}>Visit island page</Link>
+                <Link to={`/island/${userDb.islandId}`}>
+                  Visit {island.name} page
+                </Link>
               </div>
               <ul className="nav nav-tabs">
                 <li className="nav-item">
                   <NavLink
                     className="nav-link"
-                    to="/dashboard"
+                    to="/dashboard/home"
                     exact
-                    onClick={() => setTab('cover')}
+                    onClick={() => setTab('home')}
                   >
                     Upload cover
                   </NavLink>
@@ -77,7 +84,7 @@ const HomeView = (p) => {
                 </li>
               </ul>
               <div className="mt-3">
-                {tab === 'cover' && (
+                {tab === 'home' && (
                   <CoverView
                     uid={uid}
                     userDb={userDb}
@@ -89,7 +96,12 @@ const HomeView = (p) => {
                     setIslandFruit={setIslandFruit}
                   />
                 )}
-                {tab === 'gallery' && <GalleryView />}
+                {tab === 'gallery' && (
+                  <GalleryView
+                    onSuccessUpload={handleSuccessGallery}
+                    island={island}
+                  />
+                )}
               </div>
             </>
           )}

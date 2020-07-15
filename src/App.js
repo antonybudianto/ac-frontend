@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { withRouter, Route } from 'react-router-dom';
+import { Redirect, withRouter, Route } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { Switch } from 'react-router-dom';
@@ -55,9 +55,10 @@ const App = () => {
         <PrivateRoute
           loading={loading}
           isAuth={user}
-          path="/dashboard"
+          path="/dashboard/:menu"
           component={HomeView}
         />
+        <Redirect from="/dashboard" to="/dashboard/home" />
         <Route path="/islands" component={IslandExploreView} />
         <Route path="/island/:name" component={IslandView} />
         <AuthRedirectRoute
