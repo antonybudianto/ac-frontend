@@ -59,6 +59,7 @@ function GalleryView({ island, onSuccessUpload }) {
           }
           return (
             <div
+              key={i}
               className="gallery-img"
               style={{
                 backgroundImage: `url(${g})`,

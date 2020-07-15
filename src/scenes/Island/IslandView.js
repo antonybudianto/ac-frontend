@@ -36,7 +36,7 @@ function IslandView({ match }) {
           <div className="py-5 px-5 bg-light">
             <h3>Gallery</h3>
             <div className="gallery-container">
-              {(island.gallery || []).map((g, i) => {
+              {(island.gallery || [0, 0, 0, 0, 0, 0]).map((g, i) => {
                 if (!g) {
                   return <div key={i} className="gallery-img img-empty"></div>;
                 }

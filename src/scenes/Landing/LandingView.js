@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './LandingView.css';
 
 const LandingView = () => (
-  <div className="landingcontainer" style={{}}>
+  <div className="container landingcontainer" style={{}}>
     <div className="row">
       <div className="col-md-12 mt-3">
         <section
