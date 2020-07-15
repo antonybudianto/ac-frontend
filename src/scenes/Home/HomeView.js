@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/storage';
@@ -57,11 +57,6 @@ const HomeView = ({ match }) => {
             <div>Loading...</div>
           ) : (
             <>
-              <div className="float-right">
-                <Link to={`/island/${userDb.islandId}`}>
-                  Visit {island.name} page
-                </Link>
-              </div>
               <ul className="nav nav-tabs">
                 <li className="nav-item">
                   <NavLink

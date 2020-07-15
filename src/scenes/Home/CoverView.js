@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import { Link } from 'react-router-dom';
 
 const db = firebase.firestore();
 
@@ -71,6 +72,9 @@ function CoverView({
 
   return (
     <div>
+      <div>
+        <Link to={`/island/${userDb.islandId}`}>Visit {island.name} page</Link>
+      </div>
       {userDb.islandId ? (
         <div className="mt-3">
           {!uploadLoading && (

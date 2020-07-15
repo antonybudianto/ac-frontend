@@ -29,11 +29,11 @@ function IslandView({ match }) {
               backgroundImage: `url(${island.cover})`,
             }}
           ></div>
-          <div className="py-5 px-5 bg-light">
+          <div className="col-md-12 mb-5">
             <h1>{island.name}</h1>
             <div>{island.fruit} fruit</div>
           </div>
-          <div className="py-5 px-5 bg-light">
+          <div className="col-md-12 mb-5">
             <h3>Gallery</h3>
             <div className="gallery-container">
               {(island.gallery || [0, 0, 0, 0, 0, 0]).map((g, i) => {
@@ -53,7 +53,7 @@ function IslandView({ match }) {
               })}
             </div>
           </div>
-          <div className="py-5 px-5 bg-light">
+          <div className="col-md-12 mb-5">
             <h3>Free Items/DIY</h3>
             <div>
               {island.diy.map((d, i) => (
