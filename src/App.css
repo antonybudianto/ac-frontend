@@ -40,6 +40,28 @@
   background-color: gray;
 }
 
+.jumbotron {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  background-color: #fff;
+}
+
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+
+.jumbotron-heading {
+  font-weight: 300;
+  display: inline-block;
+  padding: 5px 15px;
+  background: white;
+  border-radius: 20px;
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
 @media screen and (max-width: 1000px) {
   .gallery-img {
     width: 100%;
