@@ -14,13 +14,15 @@ const LandingView = () => (
           }}
         >
           <div className="container">
-            <h1 className="jumbotron-heading bg-black-op text-white">
+            <h1 className="jumbotron-heading text-white">
               Animal Crossing Hub
             </h1>
+            <div className="landing-pic pic-isabel" />
             <p
-              className="lead text-white bg-black-op"
+              className="lead"
               style={{
                 display: 'inline-block',
+                color: 'gray',
                 paddingLeft: '15px',
                 paddingRight: '15px',
                 borderRadius: '20px',

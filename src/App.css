@@ -52,14 +52,24 @@
 
 .jumbotron-heading {
   font-weight: 300;
+  background-color: sandybrown;
   display: inline-block;
   padding: 5px 15px;
-  background: white;
   border-radius: 20px;
 }
 
 .jumbotron .container {
   max-width: 40rem;
+}
+
+.btn-primary {
+  background-color: lightsalmon;
+  border: 1px solid sandybrown;
+}
+
+.btn-primary:hover {
+  background-color: burlywood;
+  border: 1px solid sandybrown;
 }
 
 @media screen and (max-width: 1000px) {

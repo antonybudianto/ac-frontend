@@ -53,14 +53,14 @@ function IslandView({ match }) {
               })}
             </div>
           </div>
-          <div className="col-md-12 mb-5">
+          {/* <div className="col-md-12 mb-5">
             <h3>Free Items/DIY</h3>
             <div>
               {island.diy.map((d, i) => (
                 <div key={i}>{d}</div>
               ))}
             </div>
-          </div>
+          </div> */}
         </>
       ) : null}
     </div>

@@ -1,12 +1,16 @@
 .navbar {
   margin-bottom: 0;
+  background-color: sandybrown;
+}
+
+.navbar-brand {
+  font-weight: bold;
 }
 
 .landingcontainer {
   width: 100%;
   max-width: 1024px;
   margin: auto;
-  background-image: url(/acback.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -24,4 +28,25 @@ footer p {
 .custom-card,
 .bg-black-op {
   background: rgba(0, 0, 0, 0.6);
+}
+
+.landing-pic {
+  width: 100px;
+  height: 200px;
+  position: fixed;
+  z-index: -10px;
+}
+
+.pic-isabel {
+  background-image: url(/isa.png);
+  background-position: center;
+  background-size: cover;
+  top: 20%;
+  left: 20%;
+}
+
+@media screen and (max-width: 800px) {
+  .pic-isabel {
+    left: 5%;
+  }
 }

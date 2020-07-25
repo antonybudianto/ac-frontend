@@ -25,7 +25,7 @@ const Navbar = () => {
   const isAuth = user !== null;
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark">
       <NavLink to="/" exact className="navbar-brand" href="#nav">
         AnimalCrossingHub
       </NavLink>
