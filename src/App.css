@@ -1,5 +1,5 @@
 .gallery-img {
-  width: 49%;
+  width: 720px;
   height: 280px;
   margin: 4px;
   display: flex;
@@ -10,11 +10,17 @@
   box-shadow: 0 0 5px 1px lightgray;
 }
 
+.navbar {
+  margin-bottom: 0;
+  background-color: sandybrown;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
 .gallery-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  width: 75%;
 }
 
 .gallery-container input[type='file'] {
@@ -74,6 +80,10 @@
 
 @media screen and (max-width: 1000px) {
   .gallery-img {
+    width: 100%;
+  }
+
+  .gallery-container {
     width: 100%;
   }
 }
